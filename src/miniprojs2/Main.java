@@ -6,10 +6,14 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
-		game g1 = new game();
+		/*
+		 * Creating a new game called g1
+		 */
+		RushHourGame g1 = new RushHourGame();
+		/*
+		 * Starting the game g1
+		 */
 		g1.play();
-		g1.getResultat();
 		
 	}
 
