@@ -1,6 +1,9 @@
 package miniprojs2;
 
 // TODO write comment
+/**
+ * Represents the board of a rush hour game
+ */
 public class Grid
 {
 	/**
@@ -8,31 +11,53 @@ public class Grid
 	 */
 	private static final int DEFAULT_HEIGHT = 6;
 	
-	// TODO fix constant name (mispelled)
+	// TODO(done) fix constant name (mispelled)
 	/**
-	 * Default lenght of the grid
+	 * Default length of the grid
 	 */
-	private static final int DEFAULT_LENGHT = 6;
+	private static final int DEFAULT_LENGTH = 6;
 	
-	// TODO write comment
+	/**
+	 * X position of the exit
+	 */
+	private static final int EXIT_X = 5;
+	
+	/**
+	 * Y position of the exit
+	 */
+	private static final int EXIT_Y = 2;
+	
+	
+	/**
+	 * Represents the height of the grid
+	 */
+	// TODO(done) write comment
 	private final int height;
 	
-	// TODO write comment
-	// TODO fix constant name (mispelled)
-	private final int lenght;
-	// TODO write comment
+	/**
+	 * Represents the length of the grid
+	 */
+	// TODO(done) write comment
+	// TODO (done) fix constant name (mispelled)
+	private final int length;
 	
-	private final Position exit;
+	/**
+	 * Represent the case which the red car have to reach to finish the game
+	 */
+	// TODO (done) write comment
+	private final Case exit;
 	
-	// TODO write comment
+	/**
+	 * Creates a new empty grid with default height and length
+	 */
+	// TODO (done) write comment
 	public Grid()
 	{
 		this.height = Grid.DEFAULT_HEIGHT;
-		this.lenght = Grid.DEFAULT_LENGHT;
+		this.length = Grid.DEFAULT_LENGTH;
 		
-		// TODO fix it (in rush hour, exit is always at the same position (see rules)
-		Position exit = new Position();
-		this.exit= exit;
+		// TODO (done) fix it (in rush hour, exit is always at the same position (see rules)
+		this.exit = new Case(EXIT_X,EXIT_Y);
 	}
 	
 	// TODO write comment

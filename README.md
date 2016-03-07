@@ -1,2 +1,4 @@
 # miniprojs2
-projet rush hour
+Jacob Julien
+Bret Xavier
+project rush hour game

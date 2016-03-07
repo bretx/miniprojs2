@@ -1,7 +1,7 @@
 package miniprojs2;
 
 //TODO write comment
-public class Position
+public class Case
 {
 	// TODO write comment
 	private static final int DEFAULT_X = 0;
@@ -16,14 +16,14 @@ public class Position
 	private final int y;
 	
 	// TODO write comment
-	public Position()
+	public Case()
 	{
-		this.x = Position.DEFAULT_X;
-		this.y = Position.DEFAULT_Y;
+		this.x = Case.DEFAULT_X;
+		this.y = Case.DEFAULT_Y;
 	}
 	
 	// TODO write comment
-	public Position(int x0, int y0)
+	public Case(int x0, int y0)
 	{
 		this.x = x0;
 		this.y = y0;

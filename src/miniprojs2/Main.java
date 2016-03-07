@@ -1,25 +1,23 @@
-// TODO detail README.md (what/who) 
+// TODO (done) detail README.md (what/who) 
 package miniprojs2;
 
-// TODO write comment
+// TODO (done) write comment
+/**
+ * Rush hour game launcher
+ * @author bretx
+ *
+ */
 public class Main
 {
 
-	// TODO write comment	
+	// TODO (done) write comment	
+	/**
+	 * Application's main
+	 * @param args command-line arguments (unused)
+	 */
 	public static void main(String[] args)
 	{
-		// TODO remove comment (javadoc comment is for declaration, not for implementation
-		/**
-		 * Creating a new game called g1
-		 */
-		RushHourGame g1 = new RushHourGame();
-
-		// TODO remove comment (javadoc comment is for declaration, not for implementation
-		/**
-		 * Starting the game g1
-		 */
-		g1.playRushHour();
-		
+		new RushHourGame().play();			
 	}
 
 }
