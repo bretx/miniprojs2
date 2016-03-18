@@ -1,6 +1,5 @@
 package miniprojs2;
 
-// TODO write comment
 /**
  * Represents the board of a rush hour game
  */
@@ -11,12 +10,13 @@ public class Grid
 	 */
 	private static final int DEFAULT_HEIGHT = 6;
 	
-	// TODO(done) fix constant name (mispelled)
 	/**
 	 * Default length of the grid
 	 */
 	private static final int DEFAULT_LENGTH = 6;
 	
+	
+	// TODO consider gathering x and y in an object
 	/**
 	 * X position of the exit
 	 */
@@ -29,16 +29,13 @@ public class Grid
 	
 	
 	/**
-	 * Represents the height of the grid
+	 * the height of the grid
 	 */
-	// TODO(done) write comment
 	private final int height;
 	
 	/**
-	 * Represents the length of the grid
+	 * the length of the grid
 	 */
-	// TODO(done) write comment
-	// TODO (done) fix constant name (mispelled)
 	private final int length;
 	
 	/**
@@ -47,16 +44,15 @@ public class Grid
 	// TODO (done) write comment
 	private final Case exit;
 	
+	// TODO detail comment (see RushHourGame())
 	/**
 	 * Creates a new empty grid with default height and length
 	 */
-	// TODO (done) write comment
 	public Grid()
 	{
 		this.height = Grid.DEFAULT_HEIGHT;
 		this.length = Grid.DEFAULT_LENGTH;
 		
-		// TODO (done) fix it (in rush hour, exit is always at the same position (see rules)
 		this.exit = new Case(EXIT_X,EXIT_Y);
 	}
 	
@@ -65,7 +61,7 @@ public class Grid
 	public Grid(int H, int L, Position E)
 	{
 		this.height = H;
-		this.lenght = L;
+		this.length = L;
 		this.exit = E;
 	}
 	

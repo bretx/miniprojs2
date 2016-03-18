@@ -1,6 +1,5 @@
 package miniprojs2;
 
-// TODO update comment (find a link to a description of the game, in english)
 /**
  * Represents a game of rush hour, 
  * https://en.wikipedia.org/wiki/Rush_Hour_%28board_game%29
@@ -10,6 +9,7 @@ package miniprojs2;
 public class RushHourGame
 {
 	
+	//TODO rename field (non compliant with coding conventions)
 	/**
 	 * counter of the numbers of moves
 	 */
@@ -20,22 +20,20 @@ public class RushHourGame
 	 */
 	private boolean finish;
 	
-	// TODO (done) write comment
+	//TODO rename field (non compliant with coding conventions)
 	/**
 	 * grid of the game
 	 */
 	private final Grid gamegrid;
 	
-	// TODO (done) instead of positions, consider representing cars as objects
 	/**
 	 * cars that are on the grid (first car is the red one)
 	 */
 	private Car[] cars;
 	
-	// TODO (done) fix comment (ask for advice)
 	/**
 	 * Create a new Rush Hour game,  ready to be played
-	 * The grid is placed with cars on it and the move counter is set at 0 
+	 * The grid is setup with cars on it and the move counter is set at 0 
 	 * and the game isn't finished
 	 */
 	public RushHourGame()
@@ -46,6 +44,7 @@ public class RushHourGame
 		
 	}
 
+	// TODO detail (algorithm)
 	/**
 	 * Play the game (...)
 	 */
