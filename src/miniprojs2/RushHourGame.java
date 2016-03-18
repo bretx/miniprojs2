@@ -9,27 +9,32 @@ package miniprojs2;
 public class RushHourGame
 {
 	
-	//TODO rename field (non compliant with coding conventions)
+	//TODO (done) rename field (non compliant with coding conventions)
 	/**
 	 * counter of the numbers of moves
 	 */
-	private int nbmove;
+	private int nbMove;
 	
 	/**
 	 * allow to check if the game has ended or not
 	 */
 	private boolean finish;
 	
-	//TODO rename field (non compliant with coding conventions)
+	//TODO (done) rename field (non compliant with coding conventions)
 	/**
 	 * grid of the game
 	 */
-	private final Grid gamegrid;
+	private final Grid gameGrid;
 	
 	/**
 	 * cars that are on the grid (first car is the red one)
 	 */
 	private Car[] cars;
+
+	/**
+	 * Number of cars.
+	 */
+	private int nbCars;
 	
 	/**
 	 * Create a new Rush Hour game,  ready to be played
@@ -38,20 +43,42 @@ public class RushHourGame
 	 */
 	public RushHourGame()
 	{
-		this.nbmove =0;
+		int i=0;
+		this.nbMove =0;
 		this.finish = false;
-		this.gamegrid = new Grid();
+		this.gameGrid = new Grid();
+		this.cars = new Car[this.nbCars];
+		while (i<this.nbCars){
+			this.cars[i] = new Car(new Position(i,i+1), new Position(i+2,i+1));
+		}
+		this.player = new Player();
 		
 	}
 
-	// TODO detail (algorithm)
+	// TODO (done) detail (algorithm)
 	/**
-	 * Play the game (...)
+	 * Play the game i.e : it starts a loop in which the player have to make his moves 
+	 * until he wins or give up, the total number of moves and total time are
+	 * counted. 
+	 * while (game is not over)
+	 * 	do
+	 *   <ask player for a move>
+	 *  while (<move is not valid>)
+	 *  <process move>
+	 *  update counter
+	 *  update game status
 	 */
 	public void play()
-	{
-		// TODO Auto-generated method stub
-		
+	{	
+		while (this.finish == false)
+		{
+			do 
+			{
+				Move move = player.getMove();
+			}
+			while (!this.isMoveValid(move))
+			this.nbMove++;
+		}
 	}
 	
 	

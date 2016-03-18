@@ -16,16 +16,11 @@ public class Grid
 	private static final int DEFAULT_LENGTH = 6;
 	
 	
-	// TODO consider gathering x and y in an object
+	// TODO (done) consider gathering x and y in an object
 	/**
-	 * X position of the exit
+	 * default position of the Exit
 	 */
-	private static final int EXIT_X = 5;
-	
-	/**
-	 * Y position of the exit
-	 */
-	private static final int EXIT_Y = 2;
+	private static final Position DEFAULT_EXIT = new Position (3,5);
 	
 	
 	/**
@@ -42,27 +37,38 @@ public class Grid
 	 * Represent the case which the red car have to reach to finish the game
 	 */
 	// TODO (done) write comment
-	private final Case exit;
+	private final Position exit;
 	
-	// TODO detail comment (see RushHourGame())
+	// TODO (done) detail comment (see RushHourGame())
 	/**
-	 * Creates a new empty grid with default height and length
+	 * Creates a new grid with default height and length
 	 */
 	public Grid()
 	{
 		this.height = Grid.DEFAULT_HEIGHT;
 		this.length = Grid.DEFAULT_LENGTH;
+		this.exit = Grid.DEFAULT_EXIT;
 		
-		this.exit = new Case(EXIT_X,EXIT_Y);
+		
 	}
+	
 	
 	// TODO write comment
 	// TODO rename parameters (not compliant with coding conventions)
+	/**
+	 * Creates a new grid with given height and length
+	 * Places the cars and the exit using given starting positions
+	 * @param H
+	 * @param L
+	 * @param E
+	 */
+	/*
 	public Grid(int H, int L, Position E)
 	{
 		this.height = H;
 		this.length = L;
 		this.exit = E;
 	}
+	*/
 	
 }
