@@ -28,25 +28,33 @@ public class Car
 		this.rearPosition = rearPosition;
 	}
 
-	// TODO write comment
+	// TODO (done) write comment
+	/**
+	 * get the position of the front of the car
+	 * @return the front position
+	 */
 	public Position getFrontPosition()
 	{
 		return this.frontPosition;
 	}
 	
+	/**
+	 * get the position of the back of the car
+	 * @return the rear position
+	 */
 	public Position getRearPosition()
 	{
 		return this.rearPosition;
 	}
 
-	// TODO fix comment
+	// TODO (done) fix comment
 	/**
-	 * @param frontPosition
-	 * @param rearPosition
+	 * used to move a car using its two positions
+	 * @param car car which is moved
 	 */
-	public void setPosition(Position frontPosition, Position rearPosition)
+	public void setPosition(Car car)
 	{
-		this.frontPosition = frontPosition;
-		this.rearPosition = rearPosition;
+		this.frontPosition = car.frontPosition;
+		this.rearPosition = car.rearPosition;
 	}
 }

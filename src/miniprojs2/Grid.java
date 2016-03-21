@@ -18,7 +18,7 @@ public class Grid
 	/**
 	 * default position of the Exit
 	 */
-	private static final Position DEFAULT_EXIT = new Position (3,5);
+	private static final Position DEFAULT_EXIT = new Position (5,3);
 	
 	
 	/**
@@ -46,6 +46,15 @@ public class Grid
 		this.exit = Grid.DEFAULT_EXIT;
 		
 		
+	}
+
+	/**
+	 * Gets the position of the exit of the grid
+	 * @return the exit of the grid
+	 */
+	public Position getExit()
+	{
+		return this.exit;
 	}
 	
 	

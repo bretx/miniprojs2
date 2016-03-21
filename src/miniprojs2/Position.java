@@ -45,4 +45,22 @@ public class Position
 		this.x = x0;
 		this.y = y0;
 	}
+
+	/**
+	 * gets the abscissa of the position
+	 * @return x abscissa of the position
+	 */
+	public int getX()
+	{
+		return this.x;
+	}
+
+	/**
+	 * gets the ordinate of the position
+	 * @return y ordinate of the position
+	 */
+	public int getY()
+	{
+		return this.y;
+	}
 }

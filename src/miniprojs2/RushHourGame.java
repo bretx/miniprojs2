@@ -32,6 +32,11 @@ public class RushHourGame
 	 * Number of cars.
 	 */
 	private int nbCars;
+
+	/**
+	 * Player who's giving instructions to move the cars
+	 */
+	private Player player;
 	
 	/**
 	 * Create a new Rush Hour game,  ready to be played
@@ -45,11 +50,33 @@ public class RushHourGame
 		this.finish = false;
 		this.gameGrid = new Grid();
 		this.cars = new Car[this.nbCars];
+		this.cars[i] = new Car(new Position(0,3), new Position(1,3));
+		i++;
 		while (i<this.nbCars){
 			this.cars[i] = new Car(new Position(i,i+1), new Position(i+2,i+1));
 		}
 		this.player = new Player();
 		
+	}
+	
+	/**
+	 * Checks if the given move is possible in the current state of the grid
+	 * @param move The given move
+	 * @return true if the move is valid, false if it isn't valid
+	 */
+	private boolean isMoveValid(Move move)
+	{
+		int a = 0;
+		
+		while (a < this.nbCars)
+		{
+			if (a!=move.getNumCar() &&
+				((move.getCarAfterMoving().getFrontPosition().getX() == this.cars[a].getFrontPosition().getX()) ||
+				(move.getCarAfterMoving().getFrontPosition().getX() == this.cars[a].getRearPosition().getX())))		
+				{
+				}
+		}
+		return true;
 	}
 
 	/**
@@ -66,16 +93,20 @@ public class RushHourGame
 	 */
 	public void play()
 	{	
-		while (this.finish == false)
+		while (!(this.finish))
 		{
+			Move move = null;
 			do 
 			{
-				Move move = player.getMove();
+				move = this.player.getMove();
 			}
-			while (!this.isMoveValid(move))
+			while (!this.isMoveValid(move));
+			this.cars[move.getNumCar()].setPosition(move.getCarAfterMoving());
 			this.nbMove++;
+			if (this.cars[0].getFrontPosition() == (this.gameGrid.getExit()))
+			{
+				this.finish=true;
+			}
 		}
 	}
-	
-	
 }
