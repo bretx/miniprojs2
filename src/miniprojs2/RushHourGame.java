@@ -8,8 +8,6 @@ package miniprojs2;
  */
 public class RushHourGame
 {
-	
-	//TODO (done) rename field (non compliant with coding conventions)
 	/**
 	 * counter of the numbers of moves
 	 */
@@ -20,7 +18,6 @@ public class RushHourGame
 	 */
 	private boolean finish;
 	
-	//TODO (done) rename field (non compliant with coding conventions)
 	/**
 	 * grid of the game
 	 */
@@ -55,7 +52,6 @@ public class RushHourGame
 		
 	}
 
-	// TODO (done) detail (algorithm)
 	/**
 	 * Play the game i.e : it starts a loop in which the player have to make his moves 
 	 * until he wins or give up, the total number of moves and total time are

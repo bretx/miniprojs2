@@ -28,6 +28,7 @@ public class Car
 		this.rearPosition = rearPosition;
 	}
 
+	// TODO write comment
 	public Position getFrontPosition()
 	{
 		return this.frontPosition;
@@ -38,6 +39,7 @@ public class Car
 		return this.rearPosition;
 	}
 
+	// TODO fix comment
 	/**
 	 * @param frontPosition
 	 * @param rearPosition

@@ -15,8 +15,6 @@ public class Grid
 	 */
 	private static final int DEFAULT_LENGTH = 6;
 	
-	
-	// TODO (done) consider gathering x and y in an object
 	/**
 	 * default position of the Exit
 	 */
@@ -36,10 +34,8 @@ public class Grid
 	/**
 	 * Represent the case which the red car have to reach to finish the game
 	 */
-	// TODO (done) write comment
 	private final Position exit;
 	
-	// TODO (done) detail comment (see RushHourGame())
 	/**
 	 * Creates a new grid with default height and length
 	 */
@@ -53,7 +49,7 @@ public class Grid
 	}
 	
 	
-	// TODO write comment
+	// TODO fix comment
 	// TODO rename parameters (not compliant with coding conventions)
 	/**
 	 * Creates a new grid with given height and length
