@@ -46,7 +46,7 @@ public class RushHourGame
 	public RushHourGame()
 	{
 		int i=0;
-		this.nbMove =0;
+		this.setNbMove(0);
 		this.finish = false;
 		this.gameGrid = new Grid();
 		this.cars = new Car[this.nbCars];
@@ -68,14 +68,7 @@ public class RushHourGame
 	{
 		int a = 0;
 		
-		while (a < this.nbCars)
-		{
-			if (a!=move.getNumCar() &&
-				((move.getCarAfterMoving().getFrontPosition().getX() == this.cars[a].getFrontPosition().getX()) ||
-				(move.getCarAfterMoving().getFrontPosition().getX() == this.cars[a].getRearPosition().getX())))		
-				{
-				}
-		}
+		
 		return true;
 	}
 
@@ -101,12 +94,30 @@ public class RushHourGame
 				move = this.player.getMove();
 			}
 			while (!this.isMoveValid(move));
-			this.cars[move.getNumCar()].setPosition(move.getCarAfterMoving());
-			this.nbMove++;
+			//this.cars[move.getNumCar()].setPosition(move.getCarAfterMoving());
+			this.setNbMove(this.getNbMove() + 1);
 			if (this.cars[0].getFrontPosition() == (this.gameGrid.getExit()))
 			{
 				this.finish=true;
 			}
 		}
+	}
+
+	/**
+	 * Gets the current number of moves of the game
+	 * @return the number of moves 
+	 */
+	public int getNbMove()
+	{
+		return this.nbMove;
+	}
+
+	/**
+	 * modifies the current number of moves of the game
+	 * @param nbMove number of moves
+	 */
+	public void setNbMove(int nbMove)
+	{
+		this.nbMove = nbMove;
 	}
 }

@@ -12,10 +12,17 @@ public class Car
 	private Position frontPosition;
 	
 	/**
-	 * Position of the back of the car
+	 * Direction of the car
 	 */
-	private Position rearPosition;
+	//private Direction direction;
+	
+	
+	/**
+	 * Size of the car
+	 */
+	private int size;
 
+	
 	/**
 	 * Creates a new car with given postions
 	 * @param frontPosition front's position of the car
@@ -25,7 +32,6 @@ public class Car
 	{
 		super();
 		this.frontPosition = frontPosition;
-		this.rearPosition = rearPosition;
 	}
 
 	/**
@@ -37,14 +43,6 @@ public class Car
 		return this.frontPosition;
 	}
 	
-	/**
-	 * get the position of the back of the car
-	 * @return the rear position
-	 */
-	public Position getRearPosition()
-	{
-		return this.rearPosition;
-	}
 
 	/**
 	 * used to move a car using its two positions
@@ -53,6 +51,5 @@ public class Car
 	public void setPosition(Car car)
 	{
 		this.frontPosition = car.frontPosition;
-		this.rearPosition = car.rearPosition;
 	}
 }

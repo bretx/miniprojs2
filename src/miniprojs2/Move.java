@@ -14,19 +14,20 @@ public class Move
 	private int numCar;
 	
 	/**
-	 * Car which is moved
+	 * Position of the front of the car after the move
 	 */
-	private Car carAfterMoving;
+	private Position frontAfterMoving;
+	
 
 	/**
-	 * Creates a new move using a given number and car
+	 * Creates a new move using a given number and his front postion after the move
 	 * @param numCar
-	 * @param carAfterMoving
+	 * @param frontAfterMoving
 	 */
-	public Move(int numCar, Car carAfterMoving)
+	public Move(int numCar, Position frontAfterMoving)
 	{
 		this.numCar=numCar;
-		this.carAfterMoving=carAfterMoving;
+		this.frontAfterMoving=frontAfterMoving;
 	}
 	
 	/**
@@ -42,9 +43,9 @@ public class Move
 	 * Gets the car positions where the car has to be moved
 	 * @return a car
 	 */
-	public Car getCarAfterMoving()
+	public Position getFrontAfterMoving()
 	{
-		return this.carAfterMoving;
+		return this.frontAfterMoving;
 	}
 
 	
