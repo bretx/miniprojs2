@@ -28,7 +28,6 @@ public class Car
 		this.rearPosition = rearPosition;
 	}
 
-	// TODO (done) write comment
 	/**
 	 * get the position of the front of the car
 	 * @return the front position
@@ -47,7 +46,6 @@ public class Car
 		return this.rearPosition;
 	}
 
-	// TODO (done) fix comment
 	/**
 	 * used to move a car using its two positions
 	 * @param car car which is moved

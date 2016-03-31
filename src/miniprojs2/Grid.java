@@ -43,9 +43,7 @@ public class Grid
 	{
 		this.height = Grid.DEFAULT_HEIGHT;
 		this.length = Grid.DEFAULT_LENGTH;
-		this.exit = Grid.DEFAULT_EXIT;
-		
-		
+		this.exit = Grid.DEFAULT_EXIT;	
 	}
 
 	/**
