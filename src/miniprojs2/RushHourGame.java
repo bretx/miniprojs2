@@ -10,17 +10,23 @@ package miniprojs2;
 public class RushHourGame
 {
 
-	// TODO rename field
+	/**
+	 * Defines a car that doesn't exist
+	 */
+	private static final Car NULL = null;
+	
+
+	// TODO (done) rename field
 	/**
 	 * counter of the numbers of moves
 	 */
-	private int nbMove;
+	private int nbMoves;
 
-	// TODO rename field
+	// TODO (done) rename field
 	/**
 	 * allow to check if the game has ended or not
 	 */
-	private boolean finish;
+	private boolean isGameFinished;
 
 	/**
 	 * grid of the game
@@ -35,7 +41,16 @@ public class RushHourGame
 	/**
 	 * Number of cars.
 	 */
-	private int nbCars;
+	private final int nbCars;
+
+	/**
+	 * get the number of car in the game
+	 * @return the number of car
+	 */
+	public int getNbCars()
+	{
+		return this.nbCars;
+	}
 
 	/**
 	 * Player who's giving instructions to move the cars
@@ -48,16 +63,18 @@ public class RushHourGame
 	 */
 	public RushHourGame()
 	{
+		this.nbCars=6;
 		int i = 0;
 		this.setNbMove(0);
-		this.finish = false;
+		this.isGameFinished = false;
 		this.gameGrid = new Grid();
 		this.cars = new Car[this.nbCars];
-		this.cars[i] = new Car(new Position(0, 3), new Position(1, 3));
+		this.cars[i] = new Car(new Position(1, 3),2,Direction.EAST);
 		i++;
 		while (i < this.nbCars)
 		{
-			this.cars[i] = new Car(new Position(i, i + 1), new Position(i + 2, i + 1));
+			this.cars[i] = new Car(new Position(i, i + 1), (i%2)+2, Direction.NORTH );
+			// TODO Directions settings
 		}
 		this.player = new Player();
 
@@ -66,15 +83,37 @@ public class RushHourGame
 	/**
 	 * Checks if the given move is possible in the current state of the grid
 	 * 
-	 * @param move
-	 *            The given move
+	 * @param move The given move
 	 * @return true if the move is valid, false if it isn't valid
 	 */
 	private boolean isMoveValid(Move move)
 	{
-		int a = 0;
-
-		return true;
+		Car movedCar = isFrontCar(move.getFrontOfMovedCar());
+		Direction directionOfMovedCar;
+		
+		if (movedCar!= NULL)
+		{
+			directionOfMovedCar = movedCar.getCarDirection();
+			if ((directionOfMovedCar==Direction.EAST || directionOfMovedCar==Direction.WEST) && 
+					movedCar.getFrontPosition().getY()==move.getFrontAfterMoving().getY())
+			{
+				
+				for (int i=0; i<Math.abs(movedCar.getFrontPosition().getX()-move.getFrontAfterMoving().getX());i++)
+				{
+					
+				}
+			}
+			else if ((directionOfMovedCar==Direction.NORTH || directionOfMovedCar==Direction.SOUTH) && 
+					movedCar.getFrontPosition().getX()==move.getFrontAfterMoving().getX())
+			{
+				for (int i=0; i<Math.abs(movedCar.getFrontPosition().getY()-move.getFrontAfterMoving().getY());i++)
+				{
+					
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	/**
@@ -85,7 +124,7 @@ public class RushHourGame
 	 */
 	public void play()
 	{
-		while (!(this.finish))
+		while (!(this.isGameFinished))
 		{
 			Move move = null;
 			do
@@ -97,7 +136,7 @@ public class RushHourGame
 			this.setNbMove(this.getNbMove() + 1);
 			if (this.cars[0].getFrontPosition() == (this.gameGrid.getExit()))
 			{
-				this.finish = true;
+				this.isGameFinished = true;
 			}
 		}
 	}
@@ -109,7 +148,7 @@ public class RushHourGame
 	 */
 	public int getNbMove()
 	{
-		return this.nbMove;
+		return this.nbMoves;
 	}
 
 	/**
@@ -120,6 +159,22 @@ public class RushHourGame
 	 */
 	public void setNbMove(int nbMove)
 	{
-		this.nbMove = nbMove;
+		this.nbMoves = nbMove;
+	}
+	
+	/**
+	 * Cheks if there is a front of a car at the given position
+	 * @param position Position where we want to find a car
+	 * @return true if there is a car at the given position, false else
+	 */
+	public Car isFrontCar(Position position)
+	{
+		int i=0;
+		while (i < this.nbCars)
+		{
+			if (this.cars[i].getFrontPosition() == position)
+				return this.cars[i];
+		}
+		return NULL;
 	}
 }

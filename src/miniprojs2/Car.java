@@ -11,29 +11,29 @@ public class Car
 	 * Position of the front of the car
 	 */
 	private Position frontPosition;
-
-	/**
-	 * Direction of the car
-	 */
-	// private Direction direction;
-
+	
 	/**
 	 * Size of the car
 	 */
-	private int size;
-
+	private final int size;
+	
 	/**
-	 * Creates a new car with given postions
-	 * 
-	 * @param frontPosition
-	 *            front's position of the car
-	 * @param rearPosition
-	 *            back's position of the car
+	 * Direction of the car
 	 */
-	public Car(Position frontPosition, Position rearPosition)
+	private final Direction carDirection;
+
+	
+	/**
+	 * Creates a new car with given paramaters
+	 * @param frontPosition Position of the front part of the car
+	 * @param size Size of the car (2 or 3)
+	 * @param carDirection Direction which the car is facing
+	 */
+	public Car(Position frontPosition, int size, Direction carDirection)
 	{
-		super();
 		this.frontPosition = frontPosition;
+		this.size = size;
+		this.carDirection = carDirection;
 	}
 
 	/**
@@ -56,4 +56,23 @@ public class Car
 	{
 		this.frontPosition = car.frontPosition;
 	}
+
+	/**
+	 * Gets the size of the car
+	 * @return the size
+	 */
+	public int getSize()
+	{
+		return this.size;
+	}
+
+	/**
+	 * Gets the direction of the car
+	 * @return Direction which the car is facing
+	 */
+	public Direction getCarDirection()
+	{
+		return this.carDirection;
+	}
+
 }

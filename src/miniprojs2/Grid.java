@@ -55,19 +55,23 @@ public class Grid
 		return this.exit;
 	}
 
-	// TODO fix comment
-	// TODO rename parameters (not compliant with coding conventions)
 	/**
-	 * Creates a new grid with given height and length Places the cars and the
-	 * exit using given starting positions
-	 * 
-	 * @param H
-	 * @param L
-	 * @param E
+	 * Gets the length of the grid
+	 * @return the length of the current grid
 	 */
-	/*
-	 * public Grid(int H, int L, Position E) { this.height = H; this.length = L;
-	 * this.exit = E; }
+	public int getLength()
+	{
+		return this.length;
+	}
+
+	
+	/**
+	 * Gets the height of the grid
+	 * @return the height of the current grid
 	 */
+	public int getHeight()
+	{
+		return this.height;
+	}
 
 }
