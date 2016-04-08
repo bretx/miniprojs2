@@ -2,6 +2,7 @@ package miniprojs2;
 
 /**
  * Represents the player
+ * 
  * @author bretx
  *
  */
@@ -10,6 +11,7 @@ public class Player
 
 	/**
 	 * ask the player for a move
+	 * 
 	 * @return the move given by the player
 	 */
 	public Move getMove()
@@ -17,5 +19,5 @@ public class Player
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
