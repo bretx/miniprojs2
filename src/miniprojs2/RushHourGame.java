@@ -91,29 +91,50 @@ public class RushHourGame
 		Car movedCar = isFrontCar(move.getFrontOfMovedCar());
 		Direction directionOfMovedCar;
 		
+
 		if (movedCar!= NULL)
 		{
 			directionOfMovedCar = movedCar.getCarDirection();
+			
 			if ((directionOfMovedCar==Direction.EAST || directionOfMovedCar==Direction.WEST) && 
-					movedCar.getFrontPosition().getY()==move.getFrontAfterMoving().getY())
+					move.getFrontOfMovedCar().moveAxis(move.getFrontAfterMoving()) == Axis.HORIZONTAL)
 			{
+				int nbOfCaseMoved = move.numberOfCaseMoved(Axis.HORIZONTAL);
+				isLineFree(nbOfCaseMoved,move);
 				
-				for (int i=0; i<Math.abs(movedCar.getFrontPosition().getX()-move.getFrontAfterMoving().getX());i++)
+				
+				if (nbOfCaseMoved >0 && directionOfMovedCar==Direction.EAST)
 				{
-					
+					for (int i=0; i<Math.abs(nbOfCaseMoved);i++)
+					{
+						
+					}
 				}
+				
+
 			}
-			else if ((directionOfMovedCar==Direction.NORTH || directionOfMovedCar==Direction.SOUTH) && 
-					movedCar.getFrontPosition().getX()==move.getFrontAfterMoving().getX())
+			/*else if ((directionOfMovedCar==Direction.NORTH || directionOfMovedCar==Direction.SOUTH) && 
+					Position.moveAxis(move.getFrontOfMovedCar(),move.getFrontAfterMoving()) == Axis.VERTICAL)
 			{
 				for (int i=0; i<Math.abs(movedCar.getFrontPosition().getY()-move.getFrontAfterMoving().getY());i++)
 				{
 					
 				}
-			}
+			}*/
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Checks if all the case of a line are free
+	 * @param nbOfCaseMoved number of cases that should be checked
+	 * @param move Move that we want the car to do
+	 */
+	private void isLineFree(int nbOfCaseMoved, Move move)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

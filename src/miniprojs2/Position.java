@@ -69,4 +69,21 @@ public class Position
 	{
 		return this.y;
 	}
+
+	/**
+	 * Calculate the axis of a move
+	 * @param position Move of the car
+	 * @param position2 Car which is moved 
+	 * @return horizontal if the move is on the x axis,else vertical
+	 */
+	public Axis moveAxis(Position position)
+	{
+		if (position.getY()==this.getY())
+		{
+			return Axis.HORIZONTAL;
+		}
+		return Axis.VERTICAL;
+	}
+	
+	
 }

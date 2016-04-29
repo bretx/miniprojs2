@@ -48,4 +48,18 @@ public class Move
 		return this.frontOfMovedCar;
 	}
 
+	/**
+	 * Calculate the number of case of the move
+	 * @param axis 
+	 * @return the number of case of the move can be negative or positive
+	 */
+	public int numberOfCaseMoved(Axis axis)
+	{
+		if(axis==Axis.HORIZONTAL)
+		{
+			return this.frontOfMovedCar.getX()-this.getFrontAfterMoving().getX();
+		}
+		return this.frontOfMovedCar.getY()-this.getFrontAfterMoving().getY();
+	}
+
 }
