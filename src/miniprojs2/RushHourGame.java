@@ -1,5 +1,9 @@
 package miniprojs2;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Represents a game of rush hour,
  * https://en.wikipedia.org/wiki/Rush_Hour_%28board_game%29
@@ -14,7 +18,6 @@ public class RushHourGame
 	 * Defines a car that doesn't exist
 	 */
 	private static final Car NULL = null;
-	
 
 	// TODO (done) rename field
 	/**
@@ -36,21 +39,12 @@ public class RushHourGame
 	/**
 	 * cars that are on the grid (first car is the red one)
 	 */
-	private Car[] cars;
+	public ArrayList cars;
 
 	/**
 	 * Number of cars.
 	 */
 	private final int nbCars;
-
-	/**
-	 * get the number of car in the game
-	 * @return the number of car
-	 */
-	public int getNbCars()
-	{
-		return this.nbCars;
-	}
 
 	/**
 	 * Player who's giving instructions to move the cars
@@ -63,17 +57,17 @@ public class RushHourGame
 	 */
 	public RushHourGame()
 	{
-		this.nbCars=6;
+		this.nbCars = 6;
 		int i = 0;
-		this.setNbMove(0);
+		this.nbMoves = 0;
 		this.isGameFinished = false;
 		this.gameGrid = new Grid();
-		this.cars = new Car[this.nbCars];
-		this.cars[i] = new Car(new Position(1, 3),2,Direction.EAST);
+		this.cars = new ArrayList(nbCars);
+		cars.add(0, new Car(new Position(1, 3), 2, Direction.EAST));
 		i++;
 		while (i < this.nbCars)
 		{
-			this.cars[i] = new Car(new Position(i, i + 1), (i%2)+2, Direction.NORTH );
+			cars.add(1, new Car(new Position(i, i + 1), (i % 2) + 2, Direction.NORTH));
 			// TODO Directions settings
 		}
 		this.player = new Player();
@@ -83,58 +77,114 @@ public class RushHourGame
 	/**
 	 * Checks if the given move is possible in the current state of the grid
 	 * 
-	 * @param move The given move
+	 * @param move
+	 *            The given move
 	 * @return true if the move is valid, false if it isn't valid
 	 */
 	private boolean isMoveValid(Move move)
 	{
-		Car movedCar = isFrontCar(move.getFrontOfMovedCar());
-		Direction directionOfMovedCar;
-		
+		Car movedCar = getCarFromFrontPosition(move.getFrontOfMovedCar());
+		if (movedCar == NULL)
+			return false;
 
-		if (movedCar!= NULL)
-		{
-			directionOfMovedCar = movedCar.getCarDirection();
+		Direction directionOfMovedCar = movedCar.getCarDirection();
+
+		if (!(directionOfMovedCar.getAxis().equals(move.getAxis())))) return false;
 			
-			if ((directionOfMovedCar==Direction.EAST || directionOfMovedCar==Direction.WEST) && 
-					move.getFrontOfMovedCar().moveAxis(move.getFrontAfterMoving()) == Axis.HORIZONTAL)
+		if ((directionOfMovedCar == Direction.EAST || directionOfMovedCar == Direction.WEST)
+				&& move.getFrontOfMovedCar().moveAxis(move.getFrontAfterMoving()) == Axis.HORIZONTAL)
+		{
+			int nbOfCaseMoved = move.numberOfCaseMoved(Axis.HORIZONTAL);
+			if (nbOfCaseMoved != 0)
 			{
-				int nbOfCaseMoved = move.numberOfCaseMoved(Axis.HORIZONTAL);
-				isLineFree(nbOfCaseMoved,move);
-				
-				
-				if (nbOfCaseMoved >0 && directionOfMovedCar==Direction.EAST)
-				{
-					for (int i=0; i<Math.abs(nbOfCaseMoved);i++)
-					{
-						
-					}
-				}
-				
-
+				return (isSegmentFree(nbOfCaseMoved, directionOfMovedCar, move));
 			}
-			/*else if ((directionOfMovedCar==Direction.NORTH || directionOfMovedCar==Direction.SOUTH) && 
-					Position.moveAxis(move.getFrontOfMovedCar(),move.getFrontAfterMoving()) == Axis.VERTICAL)
+			else
 			{
-				for (int i=0; i<Math.abs(movedCar.getFrontPosition().getY()-move.getFrontAfterMoving().getY());i++)
-				{
-					
-				}
-			}*/
+				return false;
+			}
+
 		}
-		
-		return false;
+		/*
+		 * else if ((directionOfMovedCar==Direction.NORTH ||
+		 * directionOfMovedCar==Direction.SOUTH) &&
+		 * Position.moveAxis(move.getFrontOfMovedCar
+		 * (),move.getFrontAfterMoving()) == Axis.VERTICAL) { for (int i=0;
+		 * i<Math
+		 * .abs(movedCar.getFrontPosition().getY()-move.getFrontAfterMoving
+		 * ().getY());i++) {
+		 * 
+		 * } }
+		 */
+
+		return true;
 	}
 
 	/**
 	 * Checks if all the case of a line are free
-	 * @param nbOfCaseMoved number of cases that should be checked
-	 * @param move Move that we want the car to do
+	 * 
+	 * @param nbOfCaseMoved
+	 *            number of cases that should be checked
+	 * @param directionOfMovedCar
+	 *            Direction faced by the moved car
+	 * @param move
+	 *            move we want to do
+	 * @return true if all the cases on the given segment are free, else false
 	 */
-	private void isLineFree(int nbOfCaseMoved, Move move)
+	private boolean isSegmentFree(int nbOfCaseMoved, Direction directionOfMovedCar, Move move)
 	{
 		// TODO Auto-generated method stub
-		
+		if (directionOfMovedCar == Direction.EAST && nbOfCaseMoved < 0)
+		{
+			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
+			{
+				return isCaseFree(new Position(move.getFrontOfMovedCar().getX() - (i + 1), move.getFrontOfMovedCar().getY()));
+			}
+		}
+		else if (directionOfMovedCar == Direction.WEST && nbOfCaseMoved > 0)
+		{
+			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
+			{
+				return isCaseFree(new Position(move.getFrontOfMovedCar().getX() + (i + 1), move.getFrontOfMovedCar().getY()));
+			}
+		}
+		else if (directionOfMovedCar == Direction.SOUTH && nbOfCaseMoved < 0)
+		{
+			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
+			{
+				return isCaseFree(new Position(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() - (i + 1)));
+			}
+		}
+		else if (directionOfMovedCar == Direction.NORTH && nbOfCaseMoved > 0)
+		{
+			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
+			{
+				return isCaseFree(new Position(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() + (i + 1)));
+			}
+		}
+		return false;
+
+	}
+
+	/**
+	 * Check if a case is free
+	 * 
+	 * @param position
+	 *            case we want to check
+	 * @return true if the case is free, else false
+	 */
+	private boolean isCaseFree(Position position)
+	{
+		if (getCarFromFrontPosition(position) == NULL
+				|| getCarFromFrontPosition(new Position(position.getX() + 1, position.getY())).getCarDirection() == Direction.NORTH
+				|| getCarFromFrontPosition(new Position(position.getX() - 1, position.getY())).getCarDirection() == Direction.SOUTH
+				|| getCarFromFrontPosition(new Position(position.getX(), position.getY() + 1)).getCarDirection() == Direction.EAST
+				|| getCarFromFrontPosition(new Position(position.getX(), position.getY() - 1)).getCarDirection() == Direction.WEST)
+		{
+			return false;
+		}
+		else
+			return true;
 	}
 
 	/**
@@ -154,8 +204,8 @@ public class RushHourGame
 			}
 			while (!this.isMoveValid(move));
 			// this.cars[move.getNumCar()].setPosition(move.getCarAfterMoving());
-			this.setNbMove(this.getNbMove() + 1);
-			if (this.cars[0].getFrontPosition() == (this.gameGrid.getExit()))
+			this.nbMoves = this.nbMoves + 1;
+			if (((Car) this.cars.get(0)).getFrontPosition() == (this.gameGrid.getExit()))
 			{
 				this.isGameFinished = true;
 			}
@@ -163,37 +213,18 @@ public class RushHourGame
 	}
 
 	/**
-	 * Gets the current number of moves of the game
-	 * 
-	 * @return the number of moves
-	 */
-	public int getNbMove()
-	{
-		return this.nbMoves;
-	}
-
-	/**
-	 * modifies the current number of moves of the game
-	 * 
-	 * @param nbMove
-	 *            number of moves
-	 */
-	public void setNbMove(int nbMove)
-	{
-		this.nbMoves = nbMove;
-	}
-	
-	/**
 	 * Cheks if there is a front of a car at the given position
-	 * @param position Position where we want to find a car
+	 * 
+	 * @param position
+	 *            Position where we want to find a car
 	 * @return true if there is a car at the given position, false else
 	 */
-	public Car isFrontCar(Position position)
+	public Car getCarFromFrontPosition(Position position)
 	{
-		int i=0;
+		int i = 0;
 		while (i < this.nbCars)
 		{
-			if (this.cars[i].getFrontPosition() == position)
+			if (this.cars.get(i).getFrontPosition() == position)
 				return this.cars[i];
 		}
 		return NULL;
