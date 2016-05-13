@@ -5,7 +5,7 @@ package miniprojs2;
  * 
  * @author bretx
  */
-public class Position
+public class PositionOnRushHourGrid
 {
 	/**
 	 * set default X position of the object
@@ -30,10 +30,10 @@ public class Position
 	/**
 	 * Creates a position with default coordonates
 	 */
-	public Position()
+	public PositionOnRushHourGrid()
 	{
-		this.x = Position.DEFAULT_X;
-		this.y = Position.DEFAULT_Y;
+		this.x = PositionOnRushHourGrid.DEFAULT_X;
+		this.y = PositionOnRushHourGrid.DEFAULT_Y;
 	}
 
 	/**
@@ -43,11 +43,16 @@ public class Position
 	 *            abscissa of the position
 	 * @param y0
 	 *            ordinate of the position
+	 * @throws PositionOutOfGridException if the position is not on the grid
 	 */
-	public Position(int x0, int y0)
+	public PositionOnRushHourGrid(int x0, int y0) throws PositionOutOfGridException
 	{
-		this.x = x0;
-		this.y = y0;
+		if (x0<RushHourGrid.DEFAULT_LENGTH && y0<RushHourGrid.DEFAULT_HEIGHT)
+		{
+			this.x = x0;
+			this.y = y0;
+		}
+		else throw new PositionOutOfGridException();
 	}
 
 	/**
@@ -68,21 +73,6 @@ public class Position
 	public int getY()
 	{
 		return this.y;
-	}
-
-	/**
-	 * Calculate the axis of a move
-	 * @param position Move of the car
-	 * @param position2 Car which is moved 
-	 * @return horizontal if the move is on the x axis,else vertical
-	 */
-	public Axis moveAxis(Position position)
-	{
-		if (position.getY()==this.getY())
-		{
-			return Axis.HORIZONTAL;
-		}
-		return Axis.VERTICAL;
 	}
 	
 	

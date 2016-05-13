@@ -17,6 +17,7 @@ public class Player
 	public Move getMove()
 	{
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

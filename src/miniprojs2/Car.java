@@ -10,7 +10,7 @@ public class Car
 	/**
 	 * Position of the front of the car
 	 */
-	private Position frontPosition;
+	private PositionOnRushHourGrid frontPosition;
 	
 	/**
 	 * Size of the car
@@ -29,7 +29,7 @@ public class Car
 	 * @param size Size of the car (2 or 3)
 	 * @param carDirection Direction which the car is facing
 	 */
-	public Car(Position frontPosition, int size, Direction carDirection)
+	public Car(PositionOnRushHourGrid frontPosition, int size, Direction carDirection)
 	{
 		this.frontPosition = frontPosition;
 		this.size = size;
@@ -41,7 +41,7 @@ public class Car
 	 * 
 	 * @return the front position
 	 */
-	public Position getFrontPosition()
+	public PositionOnRushHourGrid getFrontPosition()
 	{
 		return this.frontPosition;
 	}

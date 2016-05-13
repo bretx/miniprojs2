@@ -16,7 +16,15 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
-		new RushHourGame().play();
+		try
+		{
+			new RushHourGame().play();
+		}
+		catch (PositionOutOfGridException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

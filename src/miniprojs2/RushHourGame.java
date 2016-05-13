@@ -1,8 +1,6 @@
 package miniprojs2;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Represents a game of rush hour,
@@ -34,12 +32,12 @@ public class RushHourGame
 	/**
 	 * grid of the game
 	 */
-	private final Grid gameGrid;
+	private final RushHourGrid gameGrid;
 
 	/**
 	 * cars that are on the grid (first car is the red one)
 	 */
-	public ArrayList cars;
+	public ArrayList<Car> cars;
 
 	/**
 	 * Number of cars.
@@ -54,20 +52,21 @@ public class RushHourGame
 	/**
 	 * Create a new Rush Hour game, ready to be played The grid is setup with
 	 * cars on it and the move counter is set at 0 and the game isn't finished
+	 * @throws PositionOutOfGridException 
 	 */
-	public RushHourGame()
+	public RushHourGame() throws PositionOutOfGridException
 	{
 		this.nbCars = 6;
 		int i = 0;
 		this.nbMoves = 0;
 		this.isGameFinished = false;
-		this.gameGrid = new Grid();
-		this.cars = new ArrayList(nbCars);
-		cars.add(0, new Car(new Position(1, 3), 2, Direction.EAST));
+		this.gameGrid = new RushHourGrid();
+		this.cars = new ArrayList<Car>(this.nbCars);
+		this.cars.add(0, new Car(new PositionOnRushHourGrid(1, 3), 2, Direction.EAST));
 		i++;
 		while (i < this.nbCars)
 		{
-			cars.add(1, new Car(new Position(i, i + 1), (i % 2) + 2, Direction.NORTH));
+			this.cars.add(1, new Car(new PositionOnRushHourGrid(i, i + 1), (i % 2) + 2, Direction.NORTH));
 			// TODO Directions settings
 		}
 		this.player = new Player();
@@ -80,19 +79,17 @@ public class RushHourGame
 	 * @param move
 	 *            The given move
 	 * @return true if the move is valid, false if it isn't valid
+	 * @throws PositionOutOfGridException 
 	 */
-	private boolean isMoveValid(Move move)
+	private boolean isMoveValid(Move move) throws PositionOutOfGridException
 	{
 		Car movedCar = getCarFromFrontPosition(move.getFrontOfMovedCar());
 		if (movedCar == NULL)
 			return false;
 
 		Direction directionOfMovedCar = movedCar.getCarDirection();
-
-		if (!(directionOfMovedCar.getAxis().equals(move.getAxis())))) return false;
 			
-		if ((directionOfMovedCar == Direction.EAST || directionOfMovedCar == Direction.WEST)
-				&& move.getFrontOfMovedCar().moveAxis(move.getFrontAfterMoving()) == Axis.HORIZONTAL)
+		if (move.getAxis()==Axis.HORIZONTAL)
 		{
 			int nbOfCaseMoved = move.numberOfCaseMoved(Axis.HORIZONTAL);
 			if (nbOfCaseMoved != 0)
@@ -105,17 +102,18 @@ public class RushHourGame
 			}
 
 		}
-		/*
-		 * else if ((directionOfMovedCar==Direction.NORTH ||
-		 * directionOfMovedCar==Direction.SOUTH) &&
-		 * Position.moveAxis(move.getFrontOfMovedCar
-		 * (),move.getFrontAfterMoving()) == Axis.VERTICAL) { for (int i=0;
-		 * i<Math
-		 * .abs(movedCar.getFrontPosition().getY()-move.getFrontAfterMoving
-		 * ().getY());i++) {
-		 * 
-		 * } }
-		 */
+		else if (move.getAxis()==Axis.VERTICAL)
+		{
+			int nbOfCaseMoved = move.numberOfCaseMoved(Axis.VERTICAL);
+			if (nbOfCaseMoved != 0)
+			{
+				return (isSegmentFree(nbOfCaseMoved, directionOfMovedCar, move));
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 		return true;
 	}
@@ -130,39 +128,43 @@ public class RushHourGame
 	 * @param move
 	 *            move we want to do
 	 * @return true if all the cases on the given segment are free, else false
+	 * @throws PositionOutOfGridException 
 	 */
-	private boolean isSegmentFree(int nbOfCaseMoved, Direction directionOfMovedCar, Move move)
+	private boolean isSegmentFree(int nbOfCaseMoved, Direction directionOfMovedCar, Move move) throws PositionOutOfGridException
 	{
+		boolean isFree = true;
 		// TODO Auto-generated method stub
 		if (directionOfMovedCar == Direction.EAST && nbOfCaseMoved < 0)
 		{
 			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
 			{
-				return isCaseFree(new Position(move.getFrontOfMovedCar().getX() - (i + 1), move.getFrontOfMovedCar().getY()));
+				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX() - (i + 1), move.getFrontOfMovedCar().getY()));
 			}
 		}
 		else if (directionOfMovedCar == Direction.WEST && nbOfCaseMoved > 0)
 		{
 			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
 			{
-				return isCaseFree(new Position(move.getFrontOfMovedCar().getX() + (i + 1), move.getFrontOfMovedCar().getY()));
+				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX() + (i + 1), move.getFrontOfMovedCar().getY()));
 			}
 		}
 		else if (directionOfMovedCar == Direction.SOUTH && nbOfCaseMoved < 0)
 		{
 			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
 			{
-				return isCaseFree(new Position(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() - (i + 1)));
+				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() - (i + 1)));
 			}
 		}
 		else if (directionOfMovedCar == Direction.NORTH && nbOfCaseMoved > 0)
 		{
 			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
 			{
-				return isCaseFree(new Position(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() + (i + 1)));
+				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() + (i + 1)));
 			}
 		}
-		return false;
+		else return false;
+		
+		return isFree;
 
 	}
 
@@ -172,14 +174,20 @@ public class RushHourGame
 	 * @param position
 	 *            case we want to check
 	 * @return true if the case is free, else false
+	 * @throws PositionOutOfGridException
 	 */
-	private boolean isCaseFree(Position position)
+	private boolean isCaseFree(PositionOnRushHourGrid position) throws PositionOutOfGridException
 	{
 		if (getCarFromFrontPosition(position) == NULL
-				|| getCarFromFrontPosition(new Position(position.getX() + 1, position.getY())).getCarDirection() == Direction.NORTH
-				|| getCarFromFrontPosition(new Position(position.getX() - 1, position.getY())).getCarDirection() == Direction.SOUTH
-				|| getCarFromFrontPosition(new Position(position.getX(), position.getY() + 1)).getCarDirection() == Direction.EAST
-				|| getCarFromFrontPosition(new Position(position.getX(), position.getY() - 1)).getCarDirection() == Direction.WEST)
+				|| getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 1, position.getY())).getCarDirection() == Direction.NORTH
+				|| getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 1, position.getY())).getCarDirection() == Direction.SOUTH
+				|| getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 1)).getCarDirection() == Direction.EAST
+				|| getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 1)).getCarDirection() == Direction.WEST
+				|| (getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY())).getCarDirection() == Direction.NORTH && getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY())).getSize()==3)
+				|| (getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 2, position.getY())).getCarDirection() == Direction.SOUTH && getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY())).getSize()==3)
+				|| (getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2)).getCarDirection() == Direction.EAST && getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY())).getSize()==3)
+				|| (getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 2)).getCarDirection() == Direction.WEST && getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY())).getSize()==3)
+)
 		{
 			return false;
 		}
@@ -192,8 +200,9 @@ public class RushHourGame
 	 * moves until he wins or give up, the total number of moves and total time
 	 * are counted. while (game is not over) do <ask player for a move> while
 	 * (<move is not valid>) <process move> update counter update game status
+	 * @throws PositionOutOfGridException 
 	 */
-	public void play()
+	public void play() throws PositionOutOfGridException
 	{
 		while (!(this.isGameFinished))
 		{
@@ -219,13 +228,13 @@ public class RushHourGame
 	 *            Position where we want to find a car
 	 * @return true if there is a car at the given position, false else
 	 */
-	public Car getCarFromFrontPosition(Position position)
+	public Car getCarFromFrontPosition(PositionOnRushHourGrid position)
 	{
 		int i = 0;
 		while (i < this.nbCars)
 		{
-			if (this.cars.get(i).getFrontPosition() == position)
-				return this.cars[i];
+			if (((Car) this.cars.get(i)).getFrontPosition() == position)
+				return (Car) this.cars.get(i);
 		}
 		return NULL;
 	}

@@ -3,22 +3,17 @@ package miniprojs2;
 /**
  * Represents the board of a rush hour game
  */
-public class Grid
+public class RushHourGrid
 {
 	/**
 	 * Default height of the grid
 	 */
-	private static final int DEFAULT_HEIGHT = 6;
+	public static final int DEFAULT_HEIGHT = 6;
 
 	/**
 	 * Default length of the grid
 	 */
-	private static final int DEFAULT_LENGTH = 6;
-
-	/**
-	 * default position of the Exit
-	 */
-	private static final Position DEFAULT_EXIT = new Position(5, 3);
+	public static final int DEFAULT_LENGTH = 6;
 
 	/**
 	 * the height of the grid
@@ -33,16 +28,17 @@ public class Grid
 	/**
 	 * Represent the case which the red car have to reach to finish the game
 	 */
-	private final Position exit;
+	private final PositionOnRushHourGrid exit;
 
 	/**
 	 * Creates a new grid with default height and length
+	 * @throws PositionOutOfGridException 
 	 */
-	public Grid()
+	public RushHourGrid() throws PositionOutOfGridException
 	{
-		this.height = Grid.DEFAULT_HEIGHT;
-		this.length = Grid.DEFAULT_LENGTH;
-		this.exit = Grid.DEFAULT_EXIT;
+		this.height = RushHourGrid.DEFAULT_HEIGHT;
+		this.length = RushHourGrid.DEFAULT_LENGTH;
+		this.exit = new PositionOnRushHourGrid(5, 3);
 	}
 
 	/**
@@ -50,7 +46,7 @@ public class Grid
 	 * 
 	 * @return the exit of the grid
 	 */
-	public Position getExit()
+	public PositionOnRushHourGrid getExit()
 	{
 		return this.exit;
 	}
