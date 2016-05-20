@@ -22,8 +22,6 @@ public class Main
 		}
 		catch (PositionOutOfGridException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

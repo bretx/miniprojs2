@@ -75,5 +75,12 @@ public class PositionOnRushHourGrid
 		return this.y;
 	}
 	
+	public PositionOnRushHourGrid caseNextTo(Direction direction){
+		if (direction==Direction.NORTH){
+			
+		}
+		
+		return null;
+	}
 	
 }

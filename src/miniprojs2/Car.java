@@ -49,12 +49,12 @@ public class Car
 	/**
 	 * used to move a car using its two positions
 	 * 
-	 * @param car
+	 * @param position
 	 *            car which is moved
 	 */
-	public void setPosition(Car car)
+	public void setPosition(PositionOnRushHourGrid position)
 	{
-		this.frontPosition = car.frontPosition;
+		this.frontPosition = position;
 	}
 
 	/**
@@ -64,6 +64,28 @@ public class Car
 	public int getSize()
 	{
 		return this.size;
+	}
+	
+	public boolean isCarAtPosition(PositionOnRushHourGrid position)
+	{
+		if (this.frontPosition==position)
+			return true;
+		else if (this.carDirection == Direction.NORTH)
+			if (this.getSize() == 2)
+				if (this.getFrontPosition())
+				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 1))).getCarDirection() == Direction.SOUTH
+				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 1, position.getY()))).getCarDirection() == Direction.EAST
+				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 1, position.getY()))).getCarDirection() == Direction.WEST
+				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getCarDirection() == Direction.NORTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
+				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 2))).getCarDirection() == Direction.SOUTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
+				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY()))).getCarDirection() == Direction.EAST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
+				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 2, position.getY()))).getCarDirection() == Direction.WEST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
+)
+		{
+			return false;
+		}
+		else
+			return true;
 	}
 
 	/**
