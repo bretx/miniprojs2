@@ -66,26 +66,31 @@ public class Car
 		return this.size;
 	}
 	
+	/**
+	 * @param position position where we want to know if the car is
+	 * @return true if the car or one part of the car is on the given position
+	 */
 	public boolean isCarAtPosition(PositionOnRushHourGrid position)
 	{
-		if (this.frontPosition==position)
+		if (this.frontPosition.equals(position)){
 			return true;
-		else if (this.carDirection == Direction.NORTH)
-			if (this.getSize() == 2)
-				if (this.getFrontPosition())
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 1))).getCarDirection() == Direction.SOUTH
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 1, position.getY()))).getCarDirection() == Direction.EAST
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 1, position.getY()))).getCarDirection() == Direction.WEST
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getCarDirection() == Direction.NORTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 2))).getCarDirection() == Direction.SOUTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY()))).getCarDirection() == Direction.EAST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 2, position.getY()))).getCarDirection() == Direction.WEST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-)
-		{
-			return false;
 		}
-		else
-			return true;
+		else{
+			try
+			{
+				PositionOnRushHourGrid p1=  new PositionOnRushHourGrid(this.frontPosition.caseNextTo(this.carDirection).getX(),this.frontPosition.caseNextTo(this.carDirection).getY());
+				for (int i=0;i<this.getSize();i++){
+					if(p1.equals(position)){
+						return true;
+					}
+					p1 = new PositionOnRushHourGrid(p1.caseNextTo(this.carDirection).getX(),p1.caseNextTo(this.carDirection).getY());
+				}
+			}
+			catch (PositionOutOfGridException e)
+			{
+			}
+		}
+		return false;
 	}
 
 	/**

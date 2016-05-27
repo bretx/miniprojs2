@@ -75,12 +75,38 @@ public class PositionOnRushHourGrid
 		return this.y;
 	}
 	
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PositionOnRushHourGrid other = (PositionOnRushHourGrid) obj;
+		if (this.x != other.x)
+			return false;
+		if (this.y != other.y)
+			return false;
+		return true;
+	}
+
+	/**
+	 * Calculate a new position based on the given position and direction
+	 * @param direction Direction we want to get the new position
+	 * @return the position next to the given position on the given direction
+	 */
 	public PositionOnRushHourGrid caseNextTo(Direction direction){
-		if (direction==Direction.NORTH){
-			
+		try
+		{
+			return (new PositionOnRushHourGrid(this.getX()+direction.getX(),this.getY()+direction.getY()));
 		}
-		
-		return null;
+		catch (PositionOutOfGridException e)
+		{
+			return null;
+		}
 	}
 	
 }

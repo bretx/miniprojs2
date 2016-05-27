@@ -6,7 +6,7 @@ package miniprojs2;
  * @author bretx
  *
  */
-public class Player
+public class Player implements PlayerInterface
 {
 
 	/**
@@ -16,7 +16,6 @@ public class Player
 	 */
 	public Move getMove()
 	{
-		// TODO Auto-generated method stub
 		
 		return null;
 	}

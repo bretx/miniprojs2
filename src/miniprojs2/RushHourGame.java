@@ -57,19 +57,12 @@ public class RushHourGame
 	public RushHourGame() throws PositionOutOfGridException
 	{
 		this.nbCars = 6;
-		int i = 0;
 		this.nbMoves = 0;
 		this.isGameFinished = false;
 		this.gameGrid = new RushHourGrid();
 		this.cars = new ArrayList<Car>(this.nbCars);
 		this.cars.add(0, new Car(new PositionOnRushHourGrid(1, 3), 2, Direction.EAST));
-		i++;
-//		while (i < this.nbCars)
-//		{
-//			this.cars.add(i, new Car(new PositionOnRushHourGrid(i, i + 1), (i % 2) + 2, Direction.NORTH));
-//			
-//		}
-		this.cars.add(1, new Car(new PositionOnRushHourGrid(1),(1) , Direction.NORTH));
+		this.cars.add(1, new Car(new PositionOnRushHourGrid(1,1),2 , Direction.NORTH));
 
 		this.player = new Player();
 
@@ -90,7 +83,6 @@ public class RushHourGame
 			return false;
 
 		Direction directionOfMovedCar = movedCar.getCarDirection();
-			
 		if (move.getAxis()==Axis.HORIZONTAL)
 		{
 			int nbOfCaseMoved = move.numberOfCaseMoved(Axis.HORIZONTAL);
@@ -98,11 +90,7 @@ public class RushHourGame
 			{
 				return (isSegmentFree(nbOfCaseMoved, directionOfMovedCar, move));
 			}
-			else
-			{
-				return false;
-			}
-
+			else return false;
 		}
 		else if (move.getAxis()==Axis.VERTICAL)
 		{
@@ -111,12 +99,8 @@ public class RushHourGame
 			{
 				return (isSegmentFree(nbOfCaseMoved, directionOfMovedCar, move));
 			}
-			else
-			{
-				return false;
-			}
+			else return false;
 		}
-
 		return true;
 	}
 
@@ -134,40 +118,19 @@ public class RushHourGame
 	 */
 	private boolean isSegmentFree(int nbOfCaseMoved, Direction directionOfMovedCar, Move move) throws PositionOutOfGridException
 	{
+		Direction directionOfMove = directionOfMovedCar;
 		boolean isFree = true;
-		// TODO Auto-generated method stub
-		if (directionOfMovedCar == Direction.EAST && nbOfCaseMoved < 0)
-		{
-			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
-			{
-				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX() - (i + 1), move.getFrontOfMovedCar().getY()));
-			}
+		if (nbOfCaseMoved <0){
+			directionOfMove = directionOfMovedCar.oppositeDirection();
 		}
-		else if (directionOfMovedCar == Direction.WEST && nbOfCaseMoved > 0)
-		{
-			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
-			{
-				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX() + (i + 1), move.getFrontOfMovedCar().getY()));
-			}
-		}
-		else if (directionOfMovedCar == Direction.SOUTH && nbOfCaseMoved < 0)
-		{
-			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
-			{
-				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() - (i + 1)));
-			}
-		}
-		else if (directionOfMovedCar == Direction.NORTH && nbOfCaseMoved > 0)
-		{
-			for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
-			{
-				isFree=isFree && isCaseFree(new PositionOnRushHourGrid(move.getFrontOfMovedCar().getX(), move.getFrontOfMovedCar().getY() + (i + 1)));
-			}
-		}
-		else return false;
+		PositionOnRushHourGrid p1=  new PositionOnRushHourGrid(move.getFrontOfMovedCar().caseNextTo(directionOfMove).getX(),move.getFrontOfMovedCar().caseNextTo(directionOfMove).getY());
 		
-		return isFree;
-
+		for (int i = 1; i <= Math.abs(nbOfCaseMoved); i++)
+		{
+			isFree=isFree && this.isCaseFree(p1.caseNextTo(directionOfMove));
+			p1 = new PositionOnRushHourGrid(p1.caseNextTo(directionOfMove).getX(),p1.caseNextTo(directionOfMovedCar).getY());
+		}
+	 return isFree;
 	}
 
 	/**
@@ -180,22 +143,13 @@ public class RushHourGame
 	 */
 	private boolean isCaseFree(PositionOnRushHourGrid position) throws PositionOutOfGridException
 	{
-		
-		if ((this.getCarFromFrontPosition(position) != -1)
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 1))).getCarDirection() == Direction.NORTH
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 1))).getCarDirection() == Direction.SOUTH
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 1, position.getY()))).getCarDirection() == Direction.EAST
-				|| this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 1, position.getY()))).getCarDirection() == Direction.WEST
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getCarDirection() == Direction.NORTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() - 2))).getCarDirection() == Direction.SOUTH && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() + 2, position.getY()))).getCarDirection() == Direction.EAST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-				|| (this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX() - 2, position.getY()))).getCarDirection() == Direction.WEST && this.cars.get(this.getCarFromFrontPosition(new PositionOnRushHourGrid(position.getX(), position.getY() + 2))).getSize()==3)
-)
+		for (int i= 0; i<this.cars.size(); i++)
 		{
-			return false;
+			if (this.cars.get(i).isCarAtPosition(position)){
+				return false;
+			}
 		}
-		else
-			return true;
+		return true;
 	}
 
 	/**
